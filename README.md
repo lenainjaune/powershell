@@ -51,4 +51,10 @@ De là on peut chercher le fameux service par son nom en FR ou par son nom de fi
 > "Temps execution : " + ( Measure-Command { Test-Connection -Count 9 8.8.8.8 | Out-Host } ).ToString( "hh\:mm\:ss" ) 
 ```
 Exécute la commande en affichant la sortie avec **Out-Host**, renvoie la durée avec **Measure-Command** et enfin convertit en hh:mm:ss avec **ToString**
-Nota : les **:** doivent être échappés et on peut optionnellement faire précéder la durée par un texte (ni unicode, ni ASCII étendu, donc pas d'accents)
+Nota : les **:** doivent être échappés et on peut optionnellement faire précéder la durée par un texte
+
+## Télécharger un fichier depuis un serveur web
+Si le téléchargement échoue en indiquant "Invoke-WebRequest : The request was aborted: Could not create SSL/TLS secure channel." c'est que le site  nécessite SSL/TLS. Il faut alors changer le niveau de sécurité du protocole ([source](https://stackoverflow.com/questions/41618766/powershell-invoke-webrequest-fails-with-ssl-tls-secure-channel)).
+```
+> [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 ; wget "https://github.com/PowerShell/PowerShell/releases/download/v7.2.5/PowerShell-7.2.5-win-x64.msi" -OutFile "ps725_64.msi"   192.168.0.10]: PS C:\Users\lnj\Documents> [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 ; wget "https://github.com/PowerShell/PowerShell/releases/download/v7.2.5/PowerShell-7.2.5-win-x64.msi" -OutFile "e:\ps725_64.msi"
+```
