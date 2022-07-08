@@ -3,6 +3,8 @@ Ici des solutions toutes faites en PS
 
 Note : depuis 2016 PS est Open Source, installable et utilisable sous Linux (=> scripts en "objet") ; de plus sous Linux on peut utiliser **pwsh**
 
+Typo : ici les commandes sont précédées du prompt minimal tel que ```> commande ...```
+
 TODO : fusionner KB dédiée sur pwsh
 
 TODO : fusionner KB dédiée sur accès distant
@@ -62,8 +64,9 @@ Permission    : AUTORITE NT\INTERACTIF AccessAllowed, BUILTIN\Administrateurs Ac
 ```
 > Enter-PSSession -ComputerName $Host -Credential $User -Authentication Negotiate
 ```
-Si il y a plusieurs serveur PS, il faut préciser sur lequel on se connecte avec le paramètre ```-ConfigurationName $SessionConfigName```
-où **$SessionConfigName** est le nom de la configuration de la session renvoyée par la commande **Get-PSSessionConfiguration** depuis le serveur PS (voir dessus)
+Si il y a plusieurs serveur PS, il faut préciser sur lequel on se connecte avec le paramètre ```-ConfigurationName $SessionConfigName``` ([source](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/enable-psremoting?view=powershell-7.2))
+où **$SessionConfigName** est le nom de la configuration de la session renvoyée par la commande **Get-PSSessionConfiguration** depuis le serveur PS (voir dessus.
+
 ex : Enter-PSSession ... -ConfigurationName "PowerShell.7.2.5"
 
 ## Résultats dans fenêtre graphique avec possibilité de rechercher textuellement
@@ -86,12 +89,13 @@ De là on peut chercher le fameux service par son nom en FR ou par son nom de fi
 > "Temps execution : " + ( Measure-Command { Test-Connection -Count 9 8.8.8.8 | Out-Host } ).ToString( "hh\:mm\:ss" ) 
 ```
 Exécute la commande en affichant la sortie avec **Out-Host**, renvoie la durée avec **Measure-Command** et enfin convertit en hh:mm:ss avec **ToString**
+
 Nota : les **:** doivent être échappés et on peut optionnellement faire précéder la durée par un texte
 
 ## Télécharger un fichier depuis un serveur web
 Si le téléchargement échoue en indiquant "Invoke-WebRequest : The request was aborted: Could not create SSL/TLS secure channel." c'est que le site  nécessite SSL/TLS. Il faut alors changer le niveau de sécurité du protocole ([source](https://stackoverflow.com/questions/41618766/powershell-invoke-webrequest-fails-with-ssl-tls-secure-channel)).
 ```
 > [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 ; `
-wget "https://github.com/PowerShell/PowerShell/releases/download/v7.2.5/PowerShell-7.2.5-win-x64.msi" `
--OutFile "ps725_64.msi"
+   wget "https://github.com/PowerShell/PowerShell/releases/download/v7.2.5/PowerShell-7.2.5-win-x64.msi" `
+   -OutFile "PowerShell-7.2.5-win-x64.msi"
 ```
