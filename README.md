@@ -16,6 +16,20 @@ BuildVersion                   6.3.9600.17400
 PSCompatibleVersions           {1.0, 2.0, 3.0, 4.0}
 PSRemotingProtocolVersion      2.2  
 ```
+ou directement (je ne sais pas si c'est possible depuis les premières versions)
+```
+> $PSVersionTable
+Name                           Value
+----                           -----
+PSVersion                      5.1.14409.1005
+PSEdition                      Desktop
+PSCompatibleVersions           {1.0, 2.0, 3.0, 4.0...}
+BuildVersion                   10.0.14409.1005
+CLRVersion                     4.0.30319.34014
+WSManStackVersion              3.0
+PSRemotingProtocolVersion      2.3
+SerializationVersion           1.1.0.1
+```
 
 ## Résultats dans fenêtre graphique avec possibilité de rechercher textuellement
 
