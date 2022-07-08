@@ -5,11 +5,13 @@ Note : depuis 2016 PS est Open Source, installable et utilisable sous Linux (=> 
 
 Typo : ici les commandes sont précédées du prompt minimal tel que ```> commande ...```
 
+
 TODO : fusionner KB dédiée sur pwsh
 
 TODO : fusionner KB dédiée sur accès distant
 
 TODO : pourquoi avec **pwsh** sous Linux un simple ```> "Accentué"``` (object Strings) fait planter PS avec une erreur **iconv**
+
 
 ## Version de PS
 ```
