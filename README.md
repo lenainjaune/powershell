@@ -1,6 +1,8 @@
 # powershell
 Ici des solutions toutes faites en PS
 
+TODO : pouquoi sous **pwsh** un simple ```> "Accentué"``` (object Strings) fait planter PS avec une erreur **iconv**
+
 ## Version de PS
 ```
 > Get-Variable PSVersionTable -ValueOnly
@@ -28,3 +30,11 @@ Gestionnaire de services plus pratique (basé sur [ceci](https://stackoverflow.c
 Get-WmiObject win32_service | select * | ogv
 ```
 De là on peut chercher le fameux service par son nom en FR ou par son nom de fichier EN
+
+## Chronométrer commande
+[Source](https://webdevdesigner.com/q/timing-a-commands-execution-in-powershell-667044/)
+```
+> "Temps execution : " + ( Measure-Command { Test-Connection -Count 9 8.8.8.8 | Out-Host } ).ToString( "hh\:mm\:ss" ) 
+```
+Exécute la commande en affichant la sortie avec **Out-Host**, renvoie la durée avec **Measure-Command** et enfin convertit en hh:mm:ss avec **ToString**
+Nota : les **:** doivent être échappés et on peut optionnellement faire précéder la durée par un texte (ni unicode, ni ASCII étendu, donc pas d'accents)
