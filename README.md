@@ -56,5 +56,7 @@ Nota : les **:** doivent être échappés et on peut optionnellement faire préc
 ## Télécharger un fichier depuis un serveur web
 Si le téléchargement échoue en indiquant "Invoke-WebRequest : The request was aborted: Could not create SSL/TLS secure channel." c'est que le site  nécessite SSL/TLS. Il faut alors changer le niveau de sécurité du protocole ([source](https://stackoverflow.com/questions/41618766/powershell-invoke-webrequest-fails-with-ssl-tls-secure-channel)).
 ```
-> [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 ; wget "https://github.com/PowerShell/PowerShell/releases/download/v7.2.5/PowerShell-7.2.5-win-x64.msi" -OutFile "ps725_64.msi"   192.168.0.10]: PS C:\Users\lnj\Documents> [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 ; wget "https://github.com/PowerShell/PowerShell/releases/download/v7.2.5/PowerShell-7.2.5-win-x64.msi" -OutFile "e:\ps725_64.msi"
+> [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 ; `
+wget "https://github.com/PowerShell/PowerShell/releases/download/v7.2.5/PowerShell-7.2.5-win-x64.msi" `
+-OutFile "ps725_64.msi"
 ```
