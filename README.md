@@ -101,3 +101,8 @@ Si le téléchargement échoue en indiquant "Invoke-WebRequest : The request was
    wget "https://github.com/PowerShell/PowerShell/releases/download/v7.2.5/PowerShell-7.2.5-win-x64.msi" `
    -OutFile "PowerShell-7.2.5-win-x64.msi"
 ```
+## Écrire la sortie complète sans adapter (fonctionnalité "No Wrap")
+Quand on copier tel quel certains résultats de commande, il faut remanier pour éliminer les sauts de lignes et redonner l'unité d'un contenu
+> COMMAND | Write-Host
+```
+Nota : ne pas confondre avec tronquer (Truncate) qui n'affiche pas en entier un contenu et termine par une élipse pour indiquer la troncature
