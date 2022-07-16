@@ -1,4 +1,4 @@
-# powershell
+# Powershell
 Ici des solutions toutes faites en PS
 
 Note : depuis 2016 PS est Open Source, installable et utilisable sous Linux (=> scripts en "objet") ; de plus sous Linux on peut utiliser **pwsh**
@@ -18,7 +18,7 @@ TODO : **alias** => ?
 
 **gal** est un alias sur la commande **Get-Alias**
 
-**%** est un alias sur la commande **foreach**
+**%** ou **foreach** est un alias sur la commande **ForEach-Object**
 
 **?** est un alias sur la commande **Where-Object**
 
