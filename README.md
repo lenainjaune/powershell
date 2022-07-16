@@ -73,6 +73,8 @@ ex : > Enter-PSSession ... -ConfigurationName "PowerShell.7.2.5"
 ## Rendre la connexion distante persistante
 Modifier le type de démarrage du service "Gestion à distance de Windows (Gestion WSM)" (WinRM) de "Automatique (début différé)" à "Automatique"
 
+Note : pour déterminer le nom du service lié à WinRM, j'ai cherché toutes les infos d'un service qui se réfèrent à winrm (voir [rubrique concernée](#obtenir-des-informations-sur-un-service))
+
 ## Résultats dans fenêtre graphique avec possibilité de rechercher textuellement
 
 Event Viewer plus pratique (basé sur [ceci](https://stackoverflow.com/questions/66532033/how-can-i-read-analytical-windows-events-from-applications-and-services-logs-u) et amélioré par [cela](https://devblogs.microsoft.com/scripting/use-powershell-to-create-and-to-use-a-new-event-log/))
