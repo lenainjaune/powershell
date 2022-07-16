@@ -155,7 +155,7 @@ DEBUG: CommandDiscovery Information: 0 : The command [alias] was not found, tryi
 DEBUG: CommandDiscovery Information: 0 : Looking up command: get-alias
 DEBUG: CommandDiscovery Information: 0 : Cmdlet found: Get-Alias  Microsoft.PowerShell.Commands.GetAliasCommand
 
-Suivi du résultat de la commande
+Suivi du résultat de la commande alias
 ...
 ```
 => on voit que la commande **alias** (sans distinction de casse) n'est pas un alias à proprement parler mais un raccourci de **Get-Alias**
