@@ -10,8 +10,7 @@ TODO : fusionner KB dédiée sur pwsh
 
 TODO : fusionner KB dédiée sur accès distant
 
-TODO : pourquoi avec **pwsh** sous Linux un simple ```> "Accentué"``` (object Strings) fait planter PS avec une erreur **iconv**
-
+TODO : gestion correcte des caractères entre pwsh et Powershell + pourquoi avec **pwsh** sous Linux un simple ```> "Accentué"``` (object Strings) fait planter PS avec une erreur **iconv** et on revient à l'invite **pwsh**
 
 ## Version de PS
 ```
@@ -70,6 +69,9 @@ Si il y a plusieurs serveur PS, il faut préciser sur lequel on se connecte avec
 où **$SessionConfigName** est le nom de la configuration de la session renvoyée par la commande **Get-PSSessionConfiguration** depuis le serveur PS (voir dessus.
 
 ex : Enter-PSSession ... -ConfigurationName "PowerShell.7.2.5"
+
+## Rendre la connexion distante persistante
+Modifier le type de démarrage du service "Gestion à distance de Windows (Gestion WSM)" (WinRM) de "Automatique (début différé)" à "Automatique"
 
 ## Résultats dans fenêtre graphique avec possibilité de rechercher textuellement
 
