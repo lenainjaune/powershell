@@ -140,6 +140,26 @@ Quand on copier tel quel certains résultats de commande, il faut remanier pour 
 ```
 Nota : ne pas confondre avec tronquer (Truncate) qui n'affiche pas en entier un contenu et termine par une élipse pour indiquer la troncature
 
+## Lister les volumes
+### Pour tous les providers
+```
+> Get-PSDrive
+```
+
+### Pour les systèmes de fichiers uniquement
+```
+> Get-PSDrive -PSProvider 'FileSystem' | Format-table -autosize 
+
+Name Used (GB) Free (GB) Provider   Root     CurrentLocation
+---- --------- --------- --------   ----     ---------------
+C        16,08      3,58 FileSystem C:\  Users\lnj\Documents
+D         0,73      0,00 FileSystem D:\                     
+E         7,38     32,62 FileSystem E:\                     
+F         0,53      0,47 FileSystem F:\                     
+G         0,32      1,48 FileSystem G:\                     
+H       220,61    710,91 FileSystem H:\     
+```
+
 ## Debugguer une commande
 [Source](https://stackoverflow.com/questions/21033379/what-is-the-alias-keyword-in-powershell/21052658#21052658)
 ```
