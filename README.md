@@ -12,20 +12,25 @@ TODO : fusionner KB dédiée sur accès distant
 
 TODO : gestion correcte des caractères entre pwsh et Powershell + pourquoi avec **pwsh** sous Linux un simple ```> "Accentué"``` (object Strings) fait planter PS avec une erreur **iconv** et on revient à l'invite **pwsh**
 
-## Mémo des alias
-
-TODO : **alias** => ?
-
+## Mémo des alias et raccourcis
+### Alias
 **gal** est un alias sur la commande **Get-Alias**
+
+Note : la commande **alias** n'est pas un alias mais un raccourci (voir dessous les raccourcis de commande)
 
 **%** ou **foreach** est un alias sur la commande **ForEach-Object**
 
 **?** est un alias sur la commande **Where-Object**
 
-Trouver toutes les infos d'un alias ($Pattern ne peut pas contenir de wildcards comme __*__) :
+Trouver toutes les infos d'un alias ($Pattern ne peut pas contenir de wildcards comme * ) :
 ```
 > alias | select * | ? { $_ -Match $Pattern }
 ```
+
+### Raccourcis de commandes
+Au lieu de Get-**Alias** on peut taper (sans distinction de casse) **alias** tout simplement (voir aussi [debugguer une commande](#debugguer-une-commande) pour plus de compréhension)
+
+Attention : utiliser un raccourci peut être dangereux car les fichiers exécutables ont précédence sur les raccourcis ; ainsi si depuis le dossier en cours de PS, j'ai un exécutable (binaire ou script) nommé **alias** (soit alias.exe, alias.msi, alias.com, alias.bat, alias.ps, etc sans distinction de casse,  donc ALIAS.EXE sera aussi candidat), il aura précédence sur le raccourci et en croyant exécuter le raccourci on exécutera l'exécutable du dossier en cours, donc méfiance ([source](https://stackoverflow.com/questions/21033379/what-is-the-alias-keyword-in-powershell/21052658#21052658))
 
 ## Version de PS
 ```
@@ -134,3 +139,23 @@ Quand on copier tel quel certains résultats de commande, il faut remanier pour 
 > COMMAND | Write-Host
 ```
 Nota : ne pas confondre avec tronquer (Truncate) qui n'affiche pas en entier un contenu et termine par une élipse pour indiquer la troncature
+
+## Debugguer une commande
+[Source](https://stackoverflow.com/questions/21033379/what-is-the-alias-keyword-in-powershell/21052658#21052658)
+```
+[vm-w81.local]: PS C:\Users\lnj\Documents> Trace-Command -Expression { alias } -Name CommandDiscovery -PSHost
+DEBUG: CommandDiscovery Information: 0 : Looking up command: alias
+DEBUG: CommandDiscovery Information: 0 : PATH: C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\PowerShell\7\
+DEBUG: CommandDiscovery Information: 0 : Looking for alias.* in C:\Windows\system32
+DEBUG: CommandDiscovery Information: 0 : Looking for alias.* in C:\Windows
+DEBUG: CommandDiscovery Information: 0 : Looking for alias.* in C:\Windows\System32\Wbem
+DEBUG: CommandDiscovery Information: 0 : Looking for alias.* in C:\Windows\System32\WindowsPowerShell\v1.0\
+DEBUG: CommandDiscovery Information: 0 : Looking for alias.* in C:\Program Files\PowerShell\7\
+DEBUG: CommandDiscovery Information: 0 : The command [alias] was not found, trying again with get- prepended
+DEBUG: CommandDiscovery Information: 0 : Looking up command: get-alias
+DEBUG: CommandDiscovery Information: 0 : Cmdlet found: Get-Alias  Microsoft.PowerShell.Commands.GetAliasCommand
+
+Suivi du résultat de la commande
+...
+```
+=> on voit que la commande **alias** (sans distinction de casse) n'est pas un alias à proprement parler mais un raccourci de **Get-Alias**
