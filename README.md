@@ -153,11 +153,7 @@ Nota : ne pas confondre avec tronquer (Truncate) qui n'affiche pas en entier un 
 Name Used (GB) Free (GB) Provider   Root      CurrentLocation
 ---- --------- --------- --------   ----      ---------------
 C        16,08      3,58 FileSystem C:\  Users\user\Documents
-D         0,73      0,00 FileSystem D:\                     
-E         7,38     32,62 FileSystem E:\                     
-F         0,53      0,47 FileSystem F:\                     
-G         0,32      1,48 FileSystem G:\                     
-H       220,61    710,91 FileSystem H:\     
+D       220,61    710,91 FileSystem H:\     
 ```
 
 ## Debugguer une commande
