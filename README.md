@@ -156,6 +156,21 @@ C        16,08      3,58 FileSystem C:\  Users\user\Documents
 D       220,61    710,91 FileSystem H:\     
 ```
 
+## Gérer les processus
+### Obtenir les infos
+```
+> Get-Process
+```
+Ex : trouver le processus lié à "wsmprovhost" pour le supprimer (cas concret rencontré lors de l'interruption d'une copie de fichier depuis Linux par **pwsh** où le fichier était insupprimable depuis Windows avec un message "Cette action ne peut être réalisée car le fichier est ouvert dans wsmprovhost.exe")
+```
+> Get-Process | ? { $_.Name -Match "wsmprovhost" } | Select Name , ID , Description
+
+Name          Id Description
+----          -- -----------
+wsmprovhost 1992 Host process for WinRM plug-ins
+```
+=> supprimer ce processus a résolu le problème (en graphique afficher les ID de processus pour ne pas se tromper)
+
 ## Debugguer une commande
 [Source](https://stackoverflow.com/questions/21033379/what-is-the-alias-keyword-in-powershell/21052658#21052658)
 ```
