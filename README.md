@@ -213,6 +213,7 @@ C:\Users\user\Documents\PowerShell\Modules\WinSCP\5.17.10.0\WinSCP.psd1
 
 ## Communiquer entre Windows et Linux par PowerShell
 ### WinSCP
+Brouillon ; à réorganiser !
 
 # TODO : télé-charger/verser dossier
 
@@ -329,7 +330,6 @@ True      Bonjour64.msi
 > Remove-WinSCPSession
 
 > Remove-Variable WinSCPSessionOption
-
 ```
 
 ## Debugguer une commande
