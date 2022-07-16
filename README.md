@@ -10,7 +10,9 @@ TODO : fusionner KB dédiée sur pwsh
 
 TODO : fusionner KB dédiée sur accès distant
 
-TODO : gestion correcte des caractères entre pwsh et Powershell + pourquoi avec **pwsh** sous Linux un simple ```> "Accentué"``` (object Strings) fait planter PS avec une erreur **iconv** et on revient à l'invite **pwsh**
+TODO : gestion correcte des caractères entre pwsh et Powershell
+
+TODO : pourquoi avec **pwsh** sous Linux un simple ```> "Accentué"``` (object Strings) fait planter PS avec une erreur **iconv** et on revient à l'invite **pwsh**
 
 ## Mémo des alias et raccourcis
 ### Alias
@@ -177,6 +179,157 @@ Avertissement : on peut le faire en PS pur, mais j'ai l'impression que la comman
 Basé sur [ceci](https://stackoverflow.com/questions/13883404/custom-robocopy-progress-bar-in-powershell/25334958#25334958)
 ```
 > robocopy H:\ E:\ pbr_image.wim | %{$data = $_.Split([char]9); if("$($data[4])" -ne "") { $file = "$($data[4])"} ;Write-Progress "Percentage $($data[0])" -Activity "Robocopy" -CurrentOperation "$($file)" -ErrorAction SilentlyContinue; }
+```
+
+#### Installer un module PS
+```
+# Déterminer si le module WinSCP est déjà installé
+
+#  Note : dans le cas de multi-installation de PS, si à l'ouverture de la session distante on a précisé quelle installation utiliser (-ConfigurationName), sans -ListAvailable le module ne sera pas listé
+
+> get-module -ListAvailable | Where-object {$_.Name -like '*winscp*'}        
+
+    Directory: C:\Users\user\Documents\PowerShell\Modules
+
+ModuleType Version    PreRelease Name                                PSEdition ExportedCommands
+---------- -------    ---------- ----                                --------- ----------------
+Manifest   5.17.10.0             WinSCP                              Desk      {ConvertTo-WinSCPEscapedString, Copy-WinSCPItem, Get-WinSCPChildItem, Get-WinSCPItem…}
+
+# Déterminer si WinSCP est disponible et dans le cas contraire l'installer en se laissant guider
+
+> Install-Module -Name WinSCP
+
+
+# Déterminer dans quel dossier est installé le module (voir dessus pourquoi on utilise -ListAvailable)
+
+> Get-Module WinSCP -ListAvailable | ft Path
+
+Path
+----
+C:\Users\user\Documents\PowerShell\Modules\WinSCP\5.17.10.0\WinSCP.psd1
+
+# => installé dans C:\Users\user\Documents\PowerShell\Modules\WinSCP\5.17.10.0
+```
+
+## Communiquer entre Windows et Linux par PowerShell
+### WinSCP
+
+# TODO : télé-charger/verser dossier
+
+# TODO : afficher progression lors du transfert
+
+[Source](https://www.it-connect.fr/comment-utiliser-le-module-winscp-de-powershell/)
+
+Requis : le module WinSCP (voir **Installer un module PS**)
+
+Confirmer que dans le **\bin** on trouve bien l'exécutable **WinSCP.exe** :
+```
+> dir C:\Users\user\Documents\PowerShell\Modules\WinSCP\5.17.10.0\bin
+
+    Directory: C:\Users\user\Documents\PowerShell\Modules\WinSCP\5.17.10.0\bin
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---          24/02/2021    18:07       26847216 WinSCP.exe
+-a---          13/07/2022    11:20             79 winscp.ini
+```
+
+Avertissement : dans ce guide la connexion est volatile et n'existe que le temps de la session PS ; dès qu'on éteint ou ferme la session, les variables n'existent plus
+
+#### Ouvrir connexion SCP
+```
+# Créer une connexion WinSCP vers l'hôte SCP voulu authentifié par User/Password
+
+#  Note : si Get-WinSCPHostKeyFingerprint échoue, c'est que les identifiants, le port sont erronés, etc. ou que le serveur n'est pas opérationnel sur l'hôte SCP => bien revérifier
+
+> $SCPHost = "192.168.0.11"
+
+> $WinSCPSessionOption = New-WinSCPSessionOption -HostName $SCPHost -Protocol Scp -PortNumber 22 -Credential (Get-Credential)            
+
+PowerShell Credential Request: PowerShell credential request
+Warning: A script or application on the remote computer 192.168.0.10 is requesting your credentials. Enter your credentials only if you trust the remote computer and
+ the application or script that is requesting them.
+
+Enter your credentials.
+User: user
+Password for user user: ***********
+
+# [option] modifier certains réglages avant d'ouvrir la session : $WinSCPSessionOption.PortNumber = 222
+
+> $sshHostKeyFingerprint = Get-WinSCPHostKeyFingerprint -SessionOption $WinSCPSessionOption -Algorithm SHA-256
+
+> $WinSCPSessionOption.SshHostKeyFingerprint = $sshHostKeyFingerprint
+
+> $WinSCPSession = New-WinSCPSession -SessionOption ($WinSCPSessionOption)
+
+# => si la dernière commande a été exécutée avec succès, c'est que la connexion est opérationnelle
+
+
+# Confirmer que la session est bien ouverte
+
+> Get-WinSCPSession
+
+Opened       Timeout HostName
+------       ------- --------
+True        00:01:00 192.168.0.11
+
+
+# Obtenir le chemin actuel par défaut depuis le client SCP de la session
+
+> Get-WinSCPChildItem -WinSCPSession $WinSCPSession -Path .
+
+   Directory: ./home/user
+
+Mode                  LastWriteTime     Length Name
+----                  -------------     ------ ----
+rwxr-xr-x       18/06/2022 12:13:13            .audacity-data
+rw-r--r--       14/07/2022 21:06:34     911302 .bash_history
+...
+
+# => par défaut on est dans le home de l'utilisateur user
+```
+
+#### Téléverser par SCP
+```
+# Téléverser depuis serveur WinSCP vers hôte client SCP (exemple : installer Bonjour Avahi/mDNS/ZeroConf pour communiquer par NOM pour éviter les changements d'adresse IP dus au DHCP)
+
+# Exemple : copier l'historique des commandes PS depuis le serveur WinSCP vers le client SCP
+
+> history > history.txt
+
+> Send-WinSCPItem -WinSCPSession $WinSCPSession -Path ".\history.txt" -Destination "/home/user/Bureau/"                 
+
+   Destination: \home\user\Bureau
+
+IsSuccess FileName
+--------- --------
+True      history.txt
+```
+
+#### Télécharger par SCP
+```
+# Télécharger depuis hôte client SCP vers serveur WinSCP
+
+#  Attention : si on se connecte depuis PWSH, il ne faut PAS que -RemotePath contienne autre chose que de l'ASCII (ex : pas d'accents), sinon la commande fait planter la connexion distante avec une erreur iconv et on revient à l'invite pwsh ( - voir https://github.com/lenainjaune/powershell/edit/main/README.md)
+
+
+# Exemple : télécharger Bonjour Avahi/mDNS/ZeroConf pour permettre de communiquer par NOM et ainsi éviter les changements d'adresse IP dus au DHCP.
+
+> Receive-WinSCPItem -WinSCPSession $WinSCPSession -RemotePath '/media/DATA/utile_windows/Bonjour/Bonjour64.msi' -LocalPath "C:\"                  
+
+   Destination: C:\
+
+IsSuccess FileName
+--------- --------
+True      Bonjour64.msi
+```
+
+#### Fermer connexion SCP
+```
+> Remove-WinSCPSession
+
+> Remove-Variable WinSCPSessionOption
+
 ```
 
 ## Debugguer une commande
