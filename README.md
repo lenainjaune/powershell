@@ -22,6 +22,11 @@ TODO : **alias** => ?
 
 **?** est un alias sur la commande **Where-Object**
 
+Trouver toutes les infos d'un alias ($Pattern ne peut pas contenir de wildcards comme __*__) :
+```
+> alias | select * | ? { $_ -Match $Pattern }
+```
+
 ## Version de PS
 ```
 > Get-Variable PSVersionTable -ValueOnly
