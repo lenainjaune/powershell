@@ -12,6 +12,16 @@ TODO : fusionner KB dédiée sur accès distant
 
 TODO : gestion correcte des caractères entre pwsh et Powershell + pourquoi avec **pwsh** sous Linux un simple ```> "Accentué"``` (object Strings) fait planter PS avec une erreur **iconv** et on revient à l'invite **pwsh**
 
+## Mémo des alias
+
+TODO : **alias** => ?
+
+**gal** est un alias sur la commande **Get-Alias**
+
+**%** est un alias sur la commande **foreach**
+
+**?** est un alias sur la commande **Where-Object**
+
 ## Version de PS
 ```
 > Get-Variable PSVersionTable -ValueOnly
