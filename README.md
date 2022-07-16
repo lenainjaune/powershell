@@ -68,7 +68,7 @@ Permission    : AUTORITE NT\INTERACTIF AccessAllowed, BUILTIN\Administrateurs Ac
 Si il y a plusieurs serveur PS, il faut préciser sur lequel on se connecte avec le paramètre ```-ConfigurationName $SessionConfigName``` ([source](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/enable-psremoting?view=powershell-7.2))
 où **$SessionConfigName** est le nom de la configuration de la session renvoyée par la commande **Get-PSSessionConfiguration** depuis le serveur PS (voir dessus.
 
-ex : Enter-PSSession ... -ConfigurationName "PowerShell.7.2.5"
+ex : > Enter-PSSession ... -ConfigurationName "PowerShell.7.2.5"
 
 ## Rendre la connexion distante persistante
 Modifier le type de démarrage du service "Gestion à distance de Windows (Gestion WSM)" (WinRM) de "Automatique (début différé)" à "Automatique"
@@ -77,15 +77,20 @@ Modifier le type de démarrage du service "Gestion à distance de Windows (Gesti
 
 Event Viewer plus pratique (basé sur [ceci](https://stackoverflow.com/questions/66532033/how-can-i-read-analytical-windows-events-from-applications-and-services-logs-u) et amélioré par [cela](https://devblogs.microsoft.com/scripting/use-powershell-to-create-and-to-use-a-new-event-log/))
 ```
-Get-WinEvent -ListLog * | % { Get-WinEvent -LogName $_.LogName | Select -Property * } | Out-GridView
+> Get-WinEvent -ListLog * | % { Get-WinEvent -LogName $_.LogName | Select -Property * } | Out-GridView
 ```
 Nota : si LogName ne contient aucune entrée (cas de "Internet Explorer" après installation), une erreur s'affichera en rouge sans conséquences
 
 Gestionnaire de services plus pratique (basé sur [ceci](https://stackoverflow.com/questions/59725591/powershell-get-service-detailed-description-of-the-windows-service))
 ```
-Get-WmiObject win32_service | select * | ogv
+> Get-WmiObject win32_service | select * | ogv
 ```
 De là on peut chercher le fameux service par son nom en FR ou par son nom de fichier EN
+
+## Obtenir des informations sur un service
+```
+> Get-WmiObject win32_service | select * | ? { $_ -Match "winrm" }
+```
 
 ## Chronométrer commande
 [Source](https://webdevdesigner.com/q/timing-a-commands-execution-in-powershell-667044/)
@@ -105,6 +110,7 @@ Si le téléchargement échoue en indiquant "Invoke-WebRequest : The request was
 ```
 ## Écrire la sortie complète sans adapter (fonctionnalité "No Wrap")
 Quand on copier tel quel certains résultats de commande, il faut remanier pour éliminer les sauts de lignes et redonner l'unité d'un contenu
+```
 > COMMAND | Write-Host
 ```
 Nota : ne pas confondre avec tronquer (Truncate) qui n'affiche pas en entier un contenu et termine par une élipse pour indiquer la troncature
