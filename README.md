@@ -150,9 +150,9 @@ Nota : ne pas confondre avec tronquer (Truncate) qui n'affiche pas en entier un 
 ```
 > Get-PSDrive -PSProvider 'FileSystem' | Format-table -autosize 
 
-Name Used (GB) Free (GB) Provider   Root     CurrentLocation
----- --------- --------- --------   ----     ---------------
-C        16,08      3,58 FileSystem C:\  Users\lnj\Documents
+Name Used (GB) Free (GB) Provider   Root      CurrentLocation
+---- --------- --------- --------   ----      ---------------
+C        16,08      3,58 FileSystem C:\  Users\user\Documents
 D         0,73      0,00 FileSystem D:\                     
 E         7,38     32,62 FileSystem E:\                     
 F         0,53      0,47 FileSystem F:\                     
@@ -163,7 +163,7 @@ H       220,61    710,91 FileSystem H:\
 ## Debugguer une commande
 [Source](https://stackoverflow.com/questions/21033379/what-is-the-alias-keyword-in-powershell/21052658#21052658)
 ```
-[vm-w81.local]: PS C:\Users\lnj\Documents> Trace-Command -Expression { alias } -Name CommandDiscovery -PSHost
+> Trace-Command -Expression { alias } -Name CommandDiscovery -PSHost
 DEBUG: CommandDiscovery Information: 0 : Looking up command: alias
 DEBUG: CommandDiscovery Information: 0 : PATH: C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\PowerShell\7\
 DEBUG: CommandDiscovery Information: 0 : Looking for alias.* in C:\Windows\system32
