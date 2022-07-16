@@ -89,8 +89,11 @@ De là on peut chercher le fameux service par son nom en FR ou par son nom de fi
 
 ## Obtenir des informations sur un service
 ```
-> Get-WmiObject win32_service | select * | ? { $_ -Match "winrm" }
+> Get-WmiObject win32_service | select * | ? { $_ -Match $Pattern }
 ```
+ex : $Pattern = "winrm"
+
+Remarque : $Pattern ne doit PAS contenir de wildcard (*)
 
 ## Chronométrer commande
 [Source](https://webdevdesigner.com/q/timing-a-commands-execution-in-powershell-667044/)
