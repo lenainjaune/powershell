@@ -174,7 +174,10 @@ Note : ```Select -Last 1``` trouve le PID le plus récent ; si on supprime le pl
 
 ## Copier avec progression
 Avertissement : on peut le faire en PS pur, mais j'ai l'impression que la commande Copy-Item n'est PAS est interruptible comme robocopy
-
+Basé sur [ceci](https://stackoverflow.com/questions/13883404/custom-robocopy-progress-bar-in-powershell/25334958#25334958)
+```
+> robocopy H:\ E:\ pbr_image.wim | %{$data = $_.Split([char]9); if("$($data[4])" -ne "") { $file = "$($data[4])"} ;Write-Progress "Percentage $($data[0])" -Activity "Robocopy" -CurrentOperation "$($file)" -ErrorAction SilentlyContinue; }
+```
 
 ## Debugguer une commande
 [Source](https://stackoverflow.com/questions/21033379/what-is-the-alias-keyword-in-powershell/21052658#21052658)
