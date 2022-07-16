@@ -158,7 +158,7 @@ C        16,08      3,58 FileSystem C:\  Users\user\Documents
 D       220,61    710,91 FileSystem H:\     
 ```
 
-## Gérer les processus
+## Gérer les processus
 ```
 > Get-Process
 ```
@@ -173,6 +173,8 @@ wsmprovhost 2864 Host process for WinRM plug-ins
 => supprimer ce processus a résolu le problème (en graphique afficher les ID de processus pour ne pas supprimer le mauvais processus)
 
 Note : ```Select -Last 1``` trouve le PID le plus récent ; si on supprime le plus ancien, ... on ferme la session !
+
+Voir aussi : ce [fil](https://stackoverflow.com/questions/958123/powershell-script-to-check-an-application-thats-locking-a-file/61892088#61892088) qui propose [ce script PS natif](https://github.com/pldmgg/misc-powershell/blob/master/MyFunctions/PowerShellCore_Compatible/Get-FileLockProcess.ps1) (pour le moment  testé SANS succès pour déterminer ce qui bloque le fichier) ; à suivre ...
 
 ## Copier avec progression
 Avertissement : on peut le faire en PS pur, mais j'ai l'impression que la commande Copy-Item n'est PAS est interruptible comme robocopy
