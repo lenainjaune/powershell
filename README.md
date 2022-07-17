@@ -182,7 +182,7 @@ Basé sur [ceci](https://stackoverflow.com/questions/13883404/custom-robocopy-pr
 ```
 > robocopy H:\ E:\ pbr_image.wim | %{$data = $_.Split([char]9); if("$($data[4])" -ne "") { $file = "$($data[4])"} ;Write-Progress "Percentage $($data[0])" -Activity "Robocopy" -CurrentOperation "$($file)" -ErrorAction SilentlyContinue; }
 ```
-Note : sans vouloir être exhaustif, pour copier en désactivant la lecture utiliser ```/a-:R```
+Note : sans vouloir être exhaustif, pour copier avec **robocopy** en désactivant la lecture utiliser ```/a-:R```
 
 Voir aussi [doc officielle](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/robocopy)
 
