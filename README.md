@@ -72,12 +72,15 @@ Télécharger la version de PS voulue [ici](https://github.com/PowerShell/PowerS
 Note : on peut aussi télécharger depuis PS avec wget (voir rubrique dédiée)
 
 ## Se connecter à distance vers un serveur PS
+TODO : pourquoi on ne peut se connecter à distance que si la session Windows est ouverte ?
 ### Autoriser temporairement accès distant depuis un serveur PS
 Note : il faut à priori aussi le faire depuis chaque instance de nouvelle version, bien que ce message s'affiche : "Enter-PSSession: Connecting to remote server client.local failed with the following error message : ERROR_WSMAN_DESTINATION_UNREACHABLE: Le service Gestion des services Web ne peut pas traiter la demande. L’URI de la ressource est manquant ou n’a pas le format approprié. Consultez la documentation ou utilisez la commande suivante pour plus d’informations sur la construction d’un URI de ressource : « winrm help uris ».  For more information, see the about_Remote_Troubleshooting Help topic."
 ```
 > Enable-PSRemoting -Force
 ```
 Attention : je n'ai pas réussi à rendre l'accès permanent pour une autre configuration de session (voir dessous, fusionner et réorganiser) et de fait ne peut pas me connecter directement sur une autre configuration de session mais j'ai trouvé une solution de contournement : se connecter à la session standard (sans préciser **-ConfigurationName**), exécuter **Enable-PSRemoting -Force**, un message d'erreur s'affiche mais on peut cette fois se délogger et utiliser se connecter avec une autre configuration de session ([ici une remontée du bug](https://github.com/PowerShell/PowerShell/issues/6647) et leurs solutions n'ont pas fonctionné dans mon cas sauf peut être il me manquait **inetutils-ping** mais étaient déjà présents : **netbase** et **gss-ntlmssp**).
+
+Nota : dans mon cas je ne peut se connecter que si la session Windows est ouverte
 ### Depuis le serveur PS
 Obtenir les informations de configuration de sesssion :
 ```
