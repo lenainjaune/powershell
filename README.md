@@ -63,8 +63,9 @@ SerializationVersion           1.1.0.1
 ```
 
 ## Installer une autre version de PS (W7/8/10)
-Dépendance Windows 7 : dernier Windows Management Framework (Win7AndW2K8R2-KB3191566-x64.msu)
 [Source](https://www.tenforums.com/tutorials/151734-how-install-powershell-7-windows-7-windows-8-windows-10-a.html)
+
+Dépendance Windows 7 : dernier Windows Management Framework ([Win7AndW2K8R2-KB3191566-x64.msu](https://www.microsoft.com/en-us/download/details.aspx?id=54616))
 
 Télécharger la version de PS voulue [ici](https://github.com/PowerShell/PowerShell/releases/tag/v7.2.5) et l'installer en administrateur.
 
