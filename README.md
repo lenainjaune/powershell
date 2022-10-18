@@ -73,12 +73,13 @@ Note : on peut aussi télécharger depuis PS avec wget (voir rubrique dédiée)
 
 ## Se connecter à distance vers un serveur PS
 TODO : pourquoi on ne peut se connecter à distance que si la session Windows est ouverte ?
+
+TODO : voir plus bas même thématique : fusionner et réorganiser
 ### Autoriser temporairement accès distant depuis un serveur PS
 Note : il faut à priori aussi le faire depuis chaque instance de nouvelle version, bien que ce message s'affiche : "Enter-PSSession: Connecting to remote server client.local failed with the following error message : ERROR_WSMAN_DESTINATION_UNREACHABLE: Le service Gestion des services Web ne peut pas traiter la demande. L’URI de la ressource est manquant ou n’a pas le format approprié. Consultez la documentation ou utilisez la commande suivante pour plus d’informations sur la construction d’un URI de ressource : « winrm help uris ».  For more information, see the about_Remote_Troubleshooting Help topic."
 ```
 > Enable-PSRemoting -Force
 ```
-Attention : je n'ai pas réussi à rendre l'accès permanent pour une autre configuration de session (voir dessous, fusionner et réorganiser) et de fait ne peut pas me connecter directement sur une autre configuration de session mais j'ai trouvé une solution de contournement : se connecter à la session standard (sans préciser **-ConfigurationName**), exécuter **Enable-PSRemoting -Force**, un message d'erreur s'affiche mais on peut cette fois se délogger et utiliser se connecter avec une autre configuration de session ([ici une remontée du bug](https://github.com/PowerShell/PowerShell/issues/6647) et leurs solutions n'ont pas fonctionné dans mon cas sauf peut être il me manquait **inetutils-ping** mais étaient déjà présents : **netbase** et **gss-ntlmssp**).
 
 Nota : dans mon cas je ne peut se connecter que si la session Windows est ouverte
 ### Depuis le serveur PS
@@ -104,9 +105,13 @@ où **$SessionConfigName** est le nom de la configuration de la session renvoyé
 ex : > Enter-PSSession ... -ConfigurationName "PowerShell.7.2.5"
 
 ## Rendre la connexion distante persistante
-Modifier le type de démarrage du service "Gestion à distance de Windows (Gestion WSM)" (WinRM) de "Automatique (début différé)" à "Automatique"
+Modifier le type de démarrage du service "Gestion à distance de Windows (Gestion WSM)" (WinRM) de "Automatique (début différé)" (pas défaut) à "Automatique" (c'est sans doute ce qui empêchait de se connecter tant que la session Windows n'était pas ouverte).
 
 Note : pour déterminer le nom du service lié à WinRM, j'ai cherché toutes les infos d'un service qui se réfèrent à winrm (voir [rubrique concernée](#obtenir-des-informations-sur-un-service))
+
+Note : pour rendre une autre configuration de connexion persistente, il faudrait (à vérifier) : **inetutils-ping** (manquait dans mon cas) et étaient déjà présents les paquets **netbase** et **gss-ntlmssp** ([source](https://github.com/PowerShell/PowerShell/issues/6647)
+
+A conserver en attente de validation : je n'avais pas réussi à rendre l'accès permanent pour une autre configuration de session et de fait ne pouvait pas me connecter directement sur une autre configuration de session mais j'ai trouvé une solution de contournement : se connecter à la session standard (sans préciser **-ConfigurationName**), exécuter **Enable-PSRemoting -Force**, un message d'erreur s'affiche mais on peut cette fois se délogger et utiliser se connecter avec une autre configuration de session.
 
 ## Résultats dans fenêtre graphique avec possibilité de rechercher textuellement
 
