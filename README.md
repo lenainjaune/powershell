@@ -63,13 +63,19 @@ SerializationVersion           1.1.0.1
 ```
 
 ## Installer une autre version de PS (W7/8/10)
+Dépendance Windows 7 : dernier Windows Management Framework (Win7AndW2K8R2-KB3191566-x64.msu)
 [Source](https://www.tenforums.com/tutorials/151734-how-install-powershell-7-windows-7-windows-8-windows-10-a.html)
 
 Télécharger la version de PS voulue [ici](https://github.com/PowerShell/PowerShell/releases/tag/v7.2.5) et l'installer en administrateur.
 
 Note : on peut aussi télécharger depuis PS avec wget (voir rubrique dédiée)
 
-## Se connecter à distance depuis un serveur PS
+## Se connecter à distance vers un serveur PS
+### Autoriser accès distant depuis un serveur PS
+Note : il faut à priori aussi le faire depuis chaque instance de nouvelle version, bien que ce message s'affiche : "Enter-PSSession: Connecting to remote server client.local failed with the following error message : ERROR_WSMAN_DESTINATION_UNREACHABLE: Le service Gestion des services Web ne peut pas traiter la demande. L’URI de la ressource est manquant ou n’a pas le format approprié. Consultez la documentation ou utilisez la commande suivante pour plus d’informations sur la construction d’un URI de ressource : « winrm help uris ».  For more information, see the about_Remote_Troubleshooting Help topic."
+```
+> Enable-PSRemoting -Force
+```
 ### Depuis le serveur PS
 Obtenir les informations de configuration de sesssion :
 ```
