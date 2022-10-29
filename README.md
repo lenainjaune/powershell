@@ -6,7 +6,7 @@ Note : depuis 2016 PS est Open Source, installable et utilisable sous Linux (=> 
 Typo : ici les commandes sont précédées du prompt minimal tel que ```> commande ...```
 
 
-TODO : fusionner KB dédiée sur pwsh
+TODO : fusionner KB dédiée sur pwsh (install sous Debian : apt-get install -y powershell)
 
 TODO : fusionner KB dédiée sur accès distant
 
