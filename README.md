@@ -109,7 +109,7 @@ Modifier le type de démarrage du service "Gestion à distance de Windows (Gesti
 
 Note : pour déterminer le nom du service lié à WinRM, j'ai cherché toutes les infos d'un service qui se réfèrent à winrm (voir [rubrique concernée](#obtenir-des-informations-sur-un-service))
 
-Note : pour rendre une autre configuration de connexion persistente, il faudrait (à vérifier) : **inetutils-ping** (manquait dans mon cas) et étaient déjà présents les paquets **netbase** et **gss-ntlmssp** ([source](https://github.com/PowerShell/PowerShell/issues/6647)
+Note : pour rendre une autre configuration de connexion persistente, il faudrait (à vérifier) : exécuter **Enable-PSRemoting -Force** depuis session standard (sans préciser **-ConfigurationName**) puis le refaire pour la session de configuration nommée (préciser **-ConfigurationName**), puis mettre le service WinRM en automatique et enfin installer les paquets **inetutils-ping** (manquait dans mon cas) et ceux normalement présents **netbase** et **gss-ntlmssp** ([source](https://github.com/PowerShell/PowerShell/issues/6647)
 
 A conserver en attente de validation : je n'avais pas réussi à rendre l'accès permanent pour une autre configuration de session et de fait ne pouvait pas me connecter directement sur une autre configuration de session mais j'ai trouvé une solution de contournement : se connecter à la session standard (sans préciser **-ConfigurationName**), exécuter **Enable-PSRemoting -Force**, un message d'erreur s'affiche mais on peut cette fois se délogger et utiliser se connecter avec une autre configuration de session.
 
