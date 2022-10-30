@@ -156,6 +156,7 @@ Quand on copier tel quel certains résultats de commande, il faut remanier pour 
 ```
 > COMMAND | Write-Host
 ```
+ex : **Get-History | Write-Host**
 Nota : ne pas confondre avec tronquer (Truncate) qui n'affiche pas en entier un contenu et termine par une élipse pour indiquer la troncature
 
 ## Lister les volumes
